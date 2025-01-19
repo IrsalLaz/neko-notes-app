@@ -3,12 +3,16 @@ import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import HomePage from "./pages/HomePage";
 import AddNote from "./pages/AddNote";
+import { Link } from "react-router-dom";
 
 function App() {
 	return (
 		<div className="app-container">
 			<header>
-				<h1>React Notes</h1>
+				<h1>
+					<Link to={"/"}>React Notes</Link>
+				</h1>
+
 				<Navigation />
 			</header>
 
