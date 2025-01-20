@@ -1,7 +1,13 @@
 import React from "react";
-import { deleteNote, getNote } from "../utils/local-data";
+import {
+	archiveNote,
+	deleteNote,
+	getNote,
+	unarchiveNote,
+} from "../utils/local-data";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteButton from "../components/DeleteButton";
+import ArchiveButton from "../components/ArchiveButton";
 
 class DetailNote extends React.Component {
 	constructor(props) {
@@ -12,6 +18,8 @@ class DetailNote extends React.Component {
 		};
 
 		this.onDeleteHandler = this.onDeleteHandler.bind(this);
+		this.onArchiveHandler = this.onArchiveHandler.bind(this);
+		this.onUnArchiveHandler = this.onUnArchiveHandler.bind(this);
 	}
 
 	onDeleteHandler() {
@@ -19,13 +27,37 @@ class DetailNote extends React.Component {
 		this.props.navigate("/");
 	}
 
+	onArchiveHandler() {
+		archiveNote(this.props.id);
+		this.props.navigate("/archives");
+	}
+
+	onUnArchiveHandler() {
+		unarchiveNote(this.props.id);
+		this.props.navigate("/");
+	}
+
 	render() {
+		const isArchived = this.state.note.archived;
+
 		return (
 			<section className="detail-page">
 				<h3 className="detail-page__title">{this.state.note.title}</h3>
 				<p className="detail-page__createdAt">{this.state.note.createdAt}</p>
 				<p className="detail-page__body">{this.state.note.body}</p>
+
 				<div className="detail-page__action">
+					{!isArchived ? (
+						<ArchiveButton
+							onArchive={this.onArchiveHandler}
+							isArchive={isArchived}
+						/>
+					) : (
+						<ArchiveButton
+							onArchive={this.onUnArchiveHandler}
+							isArchive={isArchived}
+						/>
+					)}
 					<DeleteButton onDelete={this.onDeleteHandler} />
 				</div>
 			</section>
