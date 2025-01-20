@@ -3,7 +3,7 @@ import { getActiveNotes } from "../utils/local-data";
 import { useSearchParams } from "react-router-dom";
 import NoteList from "../components/NoteList";
 import Searchbar from "../components/Searchbar";
-import { FaPlus } from "react-icons/fa";
+import { BsPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 class HomePage extends React.Component {
@@ -49,7 +49,7 @@ class HomePage extends React.Component {
 				<div className="homepage__action">
 					<Link to={"/notes/new"}>
 						<button type="button" title="add" className="action">
-							<FaPlus />
+							<BsPlus />
 						</button>
 					</Link>
 				</div>
