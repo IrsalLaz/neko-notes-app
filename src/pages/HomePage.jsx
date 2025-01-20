@@ -1,15 +1,17 @@
 import React from "react";
-import { getAllNotes } from "../utils/local-data";
+import { getActiveNotes } from "../utils/local-data";
+import { useSearchParams } from "react-router-dom";
 import NoteList from "../components/NoteList";
 import Searchbar from "../components/Searchbar";
-import { useSearchParams } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class HomePage extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			notes: getAllNotes(),
+			notes: getActiveNotes(),
 			keyword: props.defaultKeyword || "",
 		};
 
@@ -43,6 +45,14 @@ class HomePage extends React.Component {
 				/>
 
 				<NoteList notes={notes} />
+
+				<div className="homepage__action">
+					<Link to={"/notes/new"}>
+						<button type="button" title="add" className="action">
+							<FaPlus />
+						</button>
+					</Link>
+				</div>
 			</section>
 		);
 	}
@@ -57,7 +67,6 @@ function HomePageWrapper() {
 		setSearchParams({ keyword });
 	}
 
-	console.log(keyword);
 	return (
 		<HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
 	);
