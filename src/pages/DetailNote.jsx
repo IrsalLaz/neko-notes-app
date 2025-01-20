@@ -1,6 +1,7 @@
 import React from "react";
-import { getNote } from "../utils/local-data";
-import { useParams } from "react-router-dom";
+import { deleteNote, getNote } from "../utils/local-data";
+import { useNavigate, useParams } from "react-router-dom";
+import DeleteButton from "../components/DeleteButton";
 
 class DetailNote extends React.Component {
 	constructor(props) {
@@ -9,6 +10,13 @@ class DetailNote extends React.Component {
 		this.state = {
 			note: getNote(props.id),
 		};
+
+		this.onDeleteHandler = this.onDeleteHandler.bind(this);
+	}
+
+	onDeleteHandler() {
+		deleteNote(this.props.id);
+		this.props.navigate("/");
 	}
 
 	render() {
@@ -17,6 +25,9 @@ class DetailNote extends React.Component {
 				<h3 className="detail-page__title">{this.state.note.title}</h3>
 				<p className="detail-page__createdAt">{this.state.note.createdAt}</p>
 				<p className="detail-page__body">{this.state.note.body}</p>
+				<div className="detail-page__action">
+					<DeleteButton onDelete={this.onDeleteHandler} />
+				</div>
 			</section>
 		);
 	}
@@ -24,8 +35,9 @@ class DetailNote extends React.Component {
 
 function DetailNoteWrapper() {
 	const { id } = useParams();
+	const navigate = useNavigate();
 
-	return <DetailNote id={id} />;
+	return <DetailNote id={id} navigate={navigate} />;
 }
 
 export default DetailNoteWrapper;
