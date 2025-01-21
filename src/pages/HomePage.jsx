@@ -5,6 +5,7 @@ import NoteList from "../components/NoteList";
 import Searchbar from "../components/Searchbar";
 import { BsPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class HomePage extends React.Component {
 	constructor(props) {
@@ -71,5 +72,10 @@ function HomePageWrapper() {
 		<HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
 	);
 }
+
+HomePage.propTypes = {
+	defaultKeyword: PropTypes.string,
+	keywordChange: PropTypes.func,
+};
 
 export default HomePageWrapper;

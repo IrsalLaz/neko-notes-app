@@ -1,5 +1,6 @@
 import React from "react";
 import { FiCheck } from "react-icons/fi";
+import PropTypes from "prop-types";
 
 function SubmitButton({ submitNote }) {
 	return (
@@ -17,5 +18,9 @@ function SubmitButton({ submitNote }) {
 		</div>
 	);
 }
+
+SubmitButton.propTypes = {
+	submitNote: PropTypes.func.isRequired,
+};
 
 export default SubmitButton;

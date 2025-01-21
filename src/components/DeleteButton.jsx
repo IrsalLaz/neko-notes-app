@@ -1,5 +1,6 @@
 import React from "react";
 import { BsTrash } from "react-icons/bs";
+import PropTypes from "prop-types";
 
 function DeleteButton({ onDelete }) {
 	return (
@@ -15,5 +16,9 @@ function DeleteButton({ onDelete }) {
 		</button>
 	);
 }
+
+DeleteButton.propTypes = {
+	onDelete: PropTypes.func.isRequired,
+};
 
 export default DeleteButton;

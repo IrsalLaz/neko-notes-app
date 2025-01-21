@@ -1,5 +1,6 @@
 import React from "react";
 import { BsBoxArrowInDown, BsBoxArrowUp } from "react-icons/bs";
+import PropTypes from "prop-types";
 
 function ArchiveButton({ onArchive, isArchive }) {
 	return (
@@ -15,5 +16,10 @@ function ArchiveButton({ onArchive, isArchive }) {
 		</button>
 	);
 }
+
+ArchiveButton.propTypes = {
+	onArchive: PropTypes.func.isRequired,
+	isArchive: PropTypes.bool.isRequired,
+};
 
 export default ArchiveButton;

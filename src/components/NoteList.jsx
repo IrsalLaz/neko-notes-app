@@ -1,5 +1,6 @@
 import React from "react";
 import NoteItem from "./NoteItem";
+import PropType from "prop-types";
 
 function NoteList({ notes }) {
 	if (notes.length === 0) {
@@ -21,5 +22,9 @@ function NoteList({ notes }) {
 		</section>
 	);
 }
+
+NoteList.propTypes = {
+	notes: PropType.array.isRequired,
+};
 
 export default NoteList;

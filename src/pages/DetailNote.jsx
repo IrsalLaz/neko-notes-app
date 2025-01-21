@@ -8,6 +8,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteButton from "../components/DeleteButton";
 import ArchiveButton from "../components/ArchiveButton";
+import PropTypes from "prop-types";
 
 class DetailNote extends React.Component {
 	constructor(props) {
@@ -71,5 +72,10 @@ function DetailNoteWrapper() {
 
 	return <DetailNote id={id} navigate={navigate} />;
 }
+
+DetailNote.propTypes = {
+	id: PropTypes.string.isRequired,
+	navigate: PropTypes.func.isRequired,
+};
 
 export default DetailNoteWrapper;

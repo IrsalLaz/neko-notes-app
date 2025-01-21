@@ -3,6 +3,7 @@ import NoteInput from "../components/NoteInput";
 import SubmitButton from "../components/SubmitButton";
 import { addNote } from "../utils/local-data";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class AddNote extends React.Component {
 	constructor(props) {
@@ -57,5 +58,9 @@ function AddNoteWrapper() {
 
 	return <AddNote navigate={navigate} />;
 }
+
+AddNote.propTypes = {
+	navigate: PropTypes.func.isRequired,
+};
 
 export default AddNoteWrapper;

@@ -3,6 +3,7 @@ import { getArchivedNotes } from "../utils/local-data";
 import { useSearchParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import NoteList from "../components/NoteList";
+import PropTypes from "prop-types";
 
 class ArchivePage extends React.Component {
 	constructor(props) {
@@ -60,5 +61,10 @@ function ArchivePageWrapper() {
 		<ArchivePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
 	);
 }
+
+ArchivePage.propTypes = {
+	defaultKeyword: PropTypes.string,
+	keywordChange: PropTypes.func,
+};
 
 export default ArchivePageWrapper;
