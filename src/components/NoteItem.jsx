@@ -15,11 +15,13 @@ function NoteItem({ id, title, body, createdAt }) {
 	);
 }
 
-NoteItem.propTypes = {
+const noteItemPropTypes = {
 	id: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
-	body: PropTypes.string,
+	body: PropTypes.string.isRequired,
 	createdAt: PropTypes.string.isRequired,
 };
 
-export default NoteItem;
+NoteItem.propTypes = noteItemPropTypes;
+
+export { NoteItem, noteItemPropTypes };
