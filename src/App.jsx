@@ -12,7 +12,7 @@ function App() {
 		<div className="app-container">
 			<header>
 				<h1>
-					<Link to={"/"}>React Notes 📝</Link>
+					<Link to={"/"}>Neko React Notes 📝</Link>
 				</h1>
 
 				<Navigation />
