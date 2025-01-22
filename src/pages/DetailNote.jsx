@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DeleteButton from "../components/DeleteButton";
 import ArchiveButton from "../components/ArchiveButton";
 import PropTypes from "prop-types";
+import { showFormattedDate } from "../utils";
 
 class DetailNote extends React.Component {
 	constructor(props) {
@@ -44,7 +45,9 @@ class DetailNote extends React.Component {
 		return (
 			<section className="detail-page">
 				<h3 className="detail-page__title">{this.state.note.title}</h3>
-				<p className="detail-page__createdAt">{this.state.note.createdAt}</p>
+				<p className="detail-page__createdAt">
+					{showFormattedDate(this.state.note.createdAt)}
+				</p>
 				<p className="detail-page__body">{this.state.note.body}</p>
 
 				<div className="detail-page__action">

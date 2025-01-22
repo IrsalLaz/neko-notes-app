@@ -1,6 +1,7 @@
 import React from "react";
 import { NoteItem, noteItemPropTypes } from "./NoteItem";
 import PropTypes from "prop-types";
+import { showFormattedDate } from "../utils";
 
 function NoteList({ notes }) {
 	return (
@@ -13,7 +14,7 @@ function NoteList({ notes }) {
 							id={note.id}
 							title={note.title}
 							body={note.body}
-							createdAt={note.createdAt}
+							createdAt={showFormattedDate(note.createdAt)}
 							archived={note.archived}
 						/>
 					))}
