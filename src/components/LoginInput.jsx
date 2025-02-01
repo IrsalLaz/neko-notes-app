@@ -17,7 +17,7 @@ function LoginInput({ login }) {
 			<input
 				type="text"
 				name="email"
-				placeholder="email"
+				placeholder="uzumaki@example.com"
 				value={email}
 				onChange={setEmail}
 			/>

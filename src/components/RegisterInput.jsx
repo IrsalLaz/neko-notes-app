@@ -1,10 +1,12 @@
 import React from "react";
 import useInput from "../hooks/useInput";
+import LocaleContext from "../contexts/LocaleContext";
 
 function RegisterInput({ register }) {
 	const [name, setName] = useInput();
 	const [email, setEmail] = useInput();
 	const [password, setPassword] = useInput();
+	const { locale } = React.useContext(LocaleContext);
 
 	const onSubmitHandler = () => {
 		register({
@@ -19,14 +21,14 @@ function RegisterInput({ register }) {
 			<input
 				type="text"
 				name="name"
-				placeholder="name"
+				placeholder="uzumaki narto"
 				value={name}
 				onChange={setName}
 			/>
 			<input
 				type="text"
 				name="email"
-				placeholder="email"
+				placeholder="uzumaki@example.com"
 				value={email}
 				onChange={setEmail}
 			/>
@@ -38,7 +40,9 @@ function RegisterInput({ register }) {
 				onChange={setPassword}
 			/>
 
-			<button onClick={onSubmitHandler}>Daftar</button>
+			<button onClick={onSubmitHandler}>
+				{locale === "id" ? "Daftar" : "Register"}
+			</button>
 		</div>
 	);
 }

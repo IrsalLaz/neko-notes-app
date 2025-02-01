@@ -90,23 +90,25 @@ function App() {
 
 	if (authedUser === null) {
 		return (
-			<div className="app-container">
-				<header>
-					<h1>
-						<Link to={"/"}>Neko React Notes 📝</Link>
-					</h1>
-				</header>
+			<LocaleContext.Provider value={localeContextValue}>
+				<div className="app-container">
+					<header>
+						<h1>
+							<Link to={"/"}>Neko React Notes 📝</Link>
+						</h1>
+					</header>
 
-				<main>
-					<Routes>
-						<Route
-							path="/*"
-							element={<LoginPage loginSuccess={onLoginSuccess} />}
-						></Route>
-						<Route path="/register" element={<RegisterPage />}></Route>
-					</Routes>
-				</main>
-			</div>
+					<main>
+						<Routes>
+							<Route
+								path="/*"
+								element={<LoginPage loginSuccess={onLoginSuccess} />}
+							></Route>
+							<Route path="/register" element={<RegisterPage />}></Route>
+						</Routes>
+					</main>
+				</div>
+			</LocaleContext.Provider>
 		);
 	}
 
