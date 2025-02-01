@@ -1,18 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import LocaleContext from "../contexts/LocaleContext";
 
 function NoteInput({ onTitleChange, onBodyChange }) {
+	const { locale } = React.useContext(LocaleContext);
+
 	return (
 		<div className="add-new-page__input">
 			<input
 				className="add-new-page__input__title"
 				type="text"
 				onChange={onTitleChange}
-				placeholder="Catatan saya"
+				placeholder={locale === "id" ? "Judulnya adalah.." : "The tittle is.."}
 			/>
 			<div
 				className="add-new-page__input__body"
-				data-placeholder="Sebenarnya saya adalah ...."
+				data-placeholder={
+					locale === "id" ? "Pada suatu hari.." : "Once upon a time.."
+				}
 				contentEditable
 				onInput={onBodyChange}
 			></div>

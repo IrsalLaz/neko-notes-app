@@ -8,6 +8,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import NotFoundPage from "./NotFoundPage";
 import DetailNote from "../components/DetailNote";
+import LoadingContainer from "../components/LoadingContainer";
 
 function DetailPage() {
 	const [note, setNote] = React.useState("");
@@ -38,14 +39,7 @@ function DetailPage() {
 	};
 
 	if (initializing) {
-		return (
-			// TODO: improve this
-			<div className="app-container">
-				<main className="loading-page">
-					<p>Loading...</p>
-				</main>
-			</div>
-		);
+		return <LoadingContainer />;
 	}
 
 	if (!note) {

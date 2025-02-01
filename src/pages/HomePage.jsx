@@ -6,6 +6,7 @@ import Searchbar from "../components/Searchbar";
 import { BsPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import LocaleContext from "../contexts/LocaleContext";
 
 function HomePage() {
 	const [notes, setNotes] = React.useState([]);
@@ -13,6 +14,7 @@ function HomePage() {
 	const [searchParams, setSearchParams] = useSearchParams(() => {
 		return searchParams.get("keyword") || "";
 	});
+	const { locale } = React.useContext(LocaleContext);
 
 	React.useEffect(() => {
 		getActiveNotes().then(({ data }) => {
@@ -31,7 +33,7 @@ function HomePage() {
 
 	return (
 		<section className="homepage">
-			<h1>Catatan Aktif 😺</h1>
+			<h1>{locale === "id" ? "Catatan Aktif 😺" : "Active Notes😺"}</h1>
 
 			<Searchbar keyword={keyword} keywordChange={onKeywordChangeHandler} />
 
