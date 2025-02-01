@@ -1,64 +1,40 @@
 import React from "react";
-import { getArchivedNotes } from "../utils/local-data";
+import { getArchivedNotes } from "../utils/network-data";
 import { useSearchParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import NoteList from "../components/NoteList";
 import PropTypes from "prop-types";
 
-class ArchivePage extends React.Component {
-	constructor(props) {
-		super(props);
+function ArchivePage() {
+	const [notes, setNotes] = React.useState([]);
+	const [keyword, setKeyword] = React.useState("");
+	const [searchParams, setSearchParams] = useSearchParams(() => {
+		return searchParams.get("keyword") || "";
+	});
 
-		this.state = {
-			notes: getArchivedNotes(),
-			keyword: props.defaultKeyword || "",
-		};
-
-		this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
-	}
-
-	onKeywordChangeHandler(keyword) {
-		this.setState(() => {
-			return {
-				keyword,
-			};
+	React.useEffect(() => {
+		getArchivedNotes().then(({ data }) => {
+			setNotes(data);
 		});
+	}, [notes]);
 
-		this.props.keywordChange(keyword);
+	async function onKeywordChangeHandler(keyword) {
+		setKeyword(keyword);
+		setSearchParams(keyword);
 	}
 
-	render() {
-		const notes = this.state.notes.filter((note) => {
-			return note.title
-				.toLowerCase()
-				.includes(this.state.keyword.toLowerCase());
-		});
-
-		return (
-			<section className="archives-page">
-				<h1>Catatan Arsip 😼</h1>
-
-				<Searchbar
-					keyword={this.state.keyword}
-					keywordChange={this.onKeywordChangeHandler}
-				/>
-
-				<NoteList notes={notes} />
-			</section>
-		);
-	}
-}
-
-function ArchivePageWrapper() {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const keyword = searchParams.get("keyword");
-
-	function changeSearchParams(keyword) {
-		setSearchParams({ keyword });
-	}
+	const filteredNotes = notes.filter((note) => {
+		return note.title.toLowerCase().includes(keyword.toLowerCase());
+	});
 
 	return (
-		<ArchivePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
+		<section className="archives-page">
+			<h1>Catatan Arsip 😼</h1>
+
+			<Searchbar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+
+			<NoteList notes={notes} />
+		</section>
 	);
 }
 
@@ -67,4 +43,4 @@ ArchivePage.propTypes = {
 	keywordChange: PropTypes.func,
 };
 
-export default ArchivePageWrapper;
+export default ArchivePage;

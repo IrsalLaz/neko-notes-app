@@ -3,6 +3,7 @@ import DeleteButton from "../components/DeleteButton";
 import ArchiveButton from "../components/ArchiveButton";
 import { showFormattedDate } from "../utils";
 import PropTypes from "prop-types";
+import parser from "html-react-parser";
 
 function DetailNote({
 	title,
@@ -17,7 +18,7 @@ function DetailNote({
 		<section className="detail-page">
 			<h3 className="detail-page__title">{title}</h3>
 			<p className="detail-page__createdAt">{showFormattedDate(createdAt)}</p>
-			<p className="detail-page__body">{body}</p>
+			<div className="detail-page__body">{parser(body)}</div>
 
 			<div className="detail-page__action">
 				{!isArchived ? (

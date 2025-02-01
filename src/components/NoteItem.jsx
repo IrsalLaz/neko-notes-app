@@ -10,7 +10,7 @@ function NoteItem({ id, title, body, createdAt }) {
 				<Link to={`/notes/${id}`}>{title}</Link>
 			</h3>
 			<p className="note-item__createdAt">{createdAt}</p>
-			<p className="note-item__body">{parser(body)}</p>
+			<div className="note-item__body">{parser(body)}</div>
 		</article>
 	);
 }

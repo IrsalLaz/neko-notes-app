@@ -1,7 +1,7 @@
 import React from "react";
 import NoteInput from "../components/NoteInput";
 import SubmitButton from "../components/SubmitButton";
-import { addNote } from "../utils/local-data";
+import { addNote } from "../utils/network-data";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 

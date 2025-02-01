@@ -4,71 +4,65 @@ import {
 	deleteNote,
 	getNote,
 	unarchiveNote,
-} from "../utils/local-data";
+} from "../utils/network-data";
 import { useNavigate, useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 import NotFoundPage from "./NotFoundPage";
 import DetailNote from "../components/DetailNote";
 
-class DetailPage extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			note: getNote(props.id),
-		};
-
-		this.onDeleteHandler = this.onDeleteHandler.bind(this);
-		this.onArchiveHandler = this.onArchiveHandler.bind(this);
-		this.onUnArchiveHandler = this.onUnArchiveHandler.bind(this);
-	}
-
-	onDeleteHandler() {
-		deleteNote(this.props.id);
-		this.props.navigate("/");
-	}
-
-	onArchiveHandler() {
-		archiveNote(this.props.id);
-		this.props.navigate("/archives");
-	}
-
-	onUnArchiveHandler() {
-		unarchiveNote(this.props.id);
-		this.props.navigate("/");
-	}
-
-	render() {
-		const isFound = this.state.note;
-
-		if (!isFound) {
-			return <NotFoundPage />;
-		}
-
-		return (
-			<DetailNote
-				title={this.state.note.title}
-				createdAt={this.state.note.createdAt}
-				body={this.state.note.body}
-				onArchive={this.onArchiveHandler}
-				onUnArchive={this.onUnArchiveHandler}
-				onDelete={this.onDeleteHandler}
-				isArchived={this.state.note.archived}
-			/>
-		);
-	}
-}
-
-function DetailPageWrapper() {
+function DetailPage() {
+	const [note, setNote] = React.useState("");
+	const [initializing, setInitializing] = React.useState(true);
 	const { id } = useParams();
 	const navigate = useNavigate();
 
-	return <DetailPage id={id} navigate={navigate} />;
+	React.useEffect(() => {
+		getNote(id).then(({ data }) => {
+			setNote(data);
+			setInitializing(false);
+		});
+	}, []);
+
+	const onDeleteHandler = () => {
+		deleteNote(id);
+		navigate("/");
+	};
+
+	const onArchiveHandler = () => {
+		archiveNote(id);
+		navigate("/archives");
+	};
+
+	const onUnArchiveHandler = () => {
+		unarchiveNote(id);
+		navigate("/");
+	};
+
+	if (initializing) {
+		return (
+			// TODO: improve this
+			<div className="app-container">
+				<main className="loading-page">
+					<p>Loading...</p>
+				</main>
+			</div>
+		);
+	}
+
+	if (!note) {
+		return <NotFoundPage />;
+	}
+
+	return (
+		<DetailNote
+			title={note.title}
+			createdAt={note.createdAt}
+			body={note.body}
+			onArchive={onArchiveHandler}
+			onUnArchive={onUnArchiveHandler}
+			onDelete={onDeleteHandler}
+			isArchived={note.archived}
+		/>
+	);
 }
 
-DetailPage.propTypes = {
-	id: PropTypes.string.isRequired,
-	navigate: PropTypes.func.isRequired,
-};
-
-export default DetailPageWrapper;
+export default DetailPage;

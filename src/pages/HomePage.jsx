@@ -1,5 +1,5 @@
 import React from "react";
-import { getActiveNotes } from "../utils/local-data";
+import { getActiveNotes, getNote } from "../utils/network-data";
 import { useSearchParams } from "react-router-dom";
 import NoteList from "../components/NoteList";
 import Searchbar from "../components/Searchbar";
@@ -7,69 +7,44 @@ import { BsPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-class HomePage extends React.Component {
-	constructor(props) {
-		super(props);
+function HomePage() {
+	const [notes, setNotes] = React.useState([]);
+	const [keyword, setKeyword] = React.useState("");
+	const [searchParams, setSearchParams] = useSearchParams(() => {
+		return searchParams.get("keyword") || "";
+	});
 
-		this.state = {
-			notes: getActiveNotes(),
-			keyword: props.defaultKeyword || "",
-		};
-
-		this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
-	}
-
-	onKeywordChangeHandler(keyword) {
-		this.setState(() => {
-			return {
-				keyword,
-			};
+	React.useEffect(() => {
+		getActiveNotes().then(({ data }) => {
+			setNotes(data);
 		});
+	}, [notes]);
 
-		this.props.keywordChange(keyword);
+	async function onKeywordChangeHandler(keyword) {
+		setKeyword(keyword);
+		setSearchParams(keyword);
 	}
 
-	render() {
-		const notes = this.state.notes.filter((note) => {
-			return note.title
-				.toLowerCase()
-				.includes(this.state.keyword.toLowerCase());
-		});
-
-		return (
-			<section className="homepage">
-				<h1>Catatan Aktif 😺</h1>
-
-				<Searchbar
-					keyword={this.state.keyword}
-					keywordChange={this.onKeywordChangeHandler}
-				/>
-
-				<NoteList notes={notes} />
-
-				<div className="homepage__action">
-					<Link to={"/notes/new"}>
-						<button type="button" title="add" className="action">
-							<BsPlus />
-						</button>
-					</Link>
-				</div>
-			</section>
-		);
-	}
-}
-
-function HomePageWrapper() {
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const keyword = searchParams.get("keyword");
-
-	function changeSearchParams(keyword) {
-		setSearchParams({ keyword });
-	}
+	const filteredNotes = notes.filter((note) => {
+		return note.title.toLowerCase().includes(keyword.toLowerCase());
+	});
 
 	return (
-		<HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
+		<section className="homepage">
+			<h1>Catatan Aktif 😺</h1>
+
+			<Searchbar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+
+			<NoteList notes={filteredNotes} />
+
+			<div className="homepage__action">
+				<Link to={"/notes/new"}>
+					<button type="button" title="add" className="action">
+						<BsPlus />
+					</button>
+				</Link>
+			</div>
+		</section>
 	);
 }
 
@@ -78,4 +53,4 @@ HomePage.propTypes = {
 	keywordChange: PropTypes.func,
 };
 
-export default HomePageWrapper;
+export default HomePage;
