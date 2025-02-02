@@ -5,9 +5,11 @@ import Searchbar from "../components/Searchbar";
 import NoteList from "../components/NoteList";
 import PropTypes from "prop-types";
 import LocaleContext from "../contexts/LocaleContext";
+import LoadingContainer from "../components/LoadingContainer";
 
 function ArchivePage() {
 	const [notes, setNotes] = React.useState([]);
+	const [initializing, setInitializing] = React.useState(true);
 	const [keyword, setKeyword] = React.useState("");
 	const [searchParams, setSearchParams] = useSearchParams(() => {
 		return searchParams.get("keyword") || "";
@@ -17,6 +19,7 @@ function ArchivePage() {
 	React.useEffect(() => {
 		getArchivedNotes().then(({ data }) => {
 			setNotes(data);
+			setInitializing(false);
 		});
 	}, [notes]);
 
@@ -29,13 +32,17 @@ function ArchivePage() {
 		return note.title.toLowerCase().includes(keyword.toLowerCase());
 	});
 
+	if (initializing) {
+		return <LoadingContainer />;
+	}
+
 	return (
 		<section className="archives-page">
 			<h1>{locale === "id" ? "Catatan Arsip 😼" : "Archive Notes😼"}</h1>
 
 			<Searchbar keyword={keyword} keywordChange={onKeywordChangeHandler} />
 
-			<NoteList notes={notes} />
+			<NoteList notes={filteredNotes} />
 		</section>
 	);
 }

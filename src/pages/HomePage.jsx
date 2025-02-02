@@ -7,9 +7,11 @@ import { BsPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import LocaleContext from "../contexts/LocaleContext";
+import LoadingContainer from "../components/LoadingContainer";
 
 function HomePage() {
 	const [notes, setNotes] = React.useState([]);
+	const [initializing, setInitializing] = React.useState(true);
 	const [keyword, setKeyword] = React.useState("");
 	const [searchParams, setSearchParams] = useSearchParams(() => {
 		return searchParams.get("keyword") || "";
@@ -19,17 +21,22 @@ function HomePage() {
 	React.useEffect(() => {
 		getActiveNotes().then(({ data }) => {
 			setNotes(data);
+			setInitializing(false);
 		});
 	}, [notes]);
 
 	async function onKeywordChangeHandler(keyword) {
 		setKeyword(keyword);
-		setSearchParams(keyword);
+		setSearchParams({ keyword });
 	}
 
 	const filteredNotes = notes.filter((note) => {
 		return note.title.toLowerCase().includes(keyword.toLowerCase());
 	});
+
+	if (initializing) {
+		return <LoadingContainer />;
+	}
 
 	return (
 		<section className="homepage">
