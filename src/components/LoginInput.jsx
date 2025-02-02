@@ -1,5 +1,6 @@
 import React from "react";
 import useInput from "../hooks/useInput";
+import PropTypes from "prop-types";
 
 function LoginInput({ login }) {
 	const [email, setEmail] = useInput();
@@ -33,5 +34,11 @@ function LoginInput({ login }) {
 		</div>
 	);
 }
+
+LoginInput.propType = {
+	login: PropTypes.func.isRequired,
+	email: PropTypes.string.isRequired,
+	password: PropTypes.string.isRequired,
+};
 
 export default LoginInput;

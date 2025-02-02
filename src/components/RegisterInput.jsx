@@ -1,6 +1,7 @@
 import React from "react";
 import useInput from "../hooks/useInput";
 import LocaleContext from "../contexts/LocaleContext";
+import PropTypes from "prop-types";
 
 function RegisterInput({ register }) {
 	const [name, setName] = useInput();
@@ -46,5 +47,12 @@ function RegisterInput({ register }) {
 		</div>
 	);
 }
+
+RegisterInput.propTypes = {
+	register: PropTypes.func.isRequired,
+	name: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+	password: PropTypes.string.isRequired,
+};
 
 export default RegisterInput;

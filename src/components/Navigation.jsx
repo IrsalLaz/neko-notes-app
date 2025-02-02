@@ -4,6 +4,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { BsMoonStars, BsSun, BsTranslate } from "react-icons/bs";
 import ThemeContext from "../contexts/ThemeContext";
 import LocaleContext from "../contexts/LocaleContext";
+import PropTypes from "prop-types";
 
 function Navigation({ logout, name }) {
 	const { theme, toggleTheme } = React.useContext(ThemeContext);
@@ -35,5 +36,10 @@ function Navigation({ logout, name }) {
 		</nav>
 	);
 }
+
+Navigation.propTypes = {
+	logout: PropTypes.func.isRequired,
+	name: PropTypes.string.isRequired,
+};
 
 export default Navigation;

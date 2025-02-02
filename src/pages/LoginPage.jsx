@@ -3,6 +3,7 @@ import { login } from "../utils/network-data";
 import LoginInput from "../components/LoginInput";
 import { Link } from "react-router-dom";
 import LocaleContext from "../contexts/LocaleContext";
+import PropTypes from "prop-types";
 
 function LoginPage({ loginSuccess }) {
 	const { locale } = React.useContext(LocaleContext);
@@ -28,5 +29,9 @@ function LoginPage({ loginSuccess }) {
 		</section>
 	);
 }
+
+LoginPage.propType = {
+	loginSuccess: PropTypes.func.isRequired,
+};
 
 export default LoginPage;
